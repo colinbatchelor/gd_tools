@@ -1,4 +1,4 @@
-# gdtools
+# gd_tools
 
 This is a package to support natural language processing of Scottish Gaelic.
 
@@ -8,7 +8,7 @@ This next bit will come in due course.
 See CONTRIBUTING.md for the current setup.
 
 ```bash
-$ pip install gdtools
+$ pip install gd_tools
 ```
 
 ## Usage
@@ -22,9 +22,9 @@ By contributing to this project, you agree to abide by its terms.
 
 ## License
 
-`gdtools` was created by Colin Batchelor. It is licensed under the terms
+`gd_tools` was created by Colin Batchelor. It is licensed under the terms
 of the MIT license.
 
 
 Colin Batchelor
-2024-02-06
+2024-02-07

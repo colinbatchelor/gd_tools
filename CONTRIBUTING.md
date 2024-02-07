@@ -40,10 +40,10 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `gdtools` for local development.
+Ready to contribute? Here's how to set up `gd_tools` for local development.
 
-1. Download a copy of `gdtools` locally.
-2. Install `gdtools` using `poetry`:
+1. Download a copy of `gd_tools` locally.
+2. Install `gd_tools` using `poetry`:
 
     ```console
     $ poetry install
@@ -69,5 +69,5 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Code of Conduct
 
-Please note that the `gdtools` project is released with a
+Please note that the `gd_tools` project is released with a
 Code of Conduct. By contributing to this project you agree to abide by its terms.

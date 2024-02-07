@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import re
 import csv
-from gdtools.lemmatizer import Lemmatizer
+from gd_tools.lemmatizer import Lemmatizer
 
 class Morphology:
     """Static methods for grammar checker."""

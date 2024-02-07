@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 import unittest
-from gdtools.lemmatizer import Lemmatizer
+from gd_tools.lemmatizer import Lemmatizer
 
 class TestLemmatizer(unittest.TestCase):
     """Expects XPOS in most cases. Consider also accepting UD features."""

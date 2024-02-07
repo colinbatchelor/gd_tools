@@ -1,9 +1,9 @@
 """Tests a mixture of generic, UD-specific and CCG-specific functions."""
 import csv
 import unittest
-from gdtools.acainn import CCGRetagger, CCGTyper, Subcat
-from gdtools.features import Features
-from gdtools.lemmatizer import Lemmatizer
+from gd_tools.acainn import CCGRetagger, CCGTyper, Subcat
+from gd_tools.features import Features
+from gd_tools.lemmatizer import Lemmatizer
 
 class TestIntegration(unittest.TestCase):
     """Checks that all the labels actually match."""
