@@ -1,12 +1,12 @@
 import csv
 from pathlib import Path
 import unittest
-from gd_tools.lemmatizer import Lemmatizer
+from gd_tools.core import Lemmatizer_xpos
 
 class TestLemmatizer(unittest.TestCase):
     """Expects XPOS in most cases. Consider also accepting UD features."""
     def setUp(self):
-        self.lemmatizer = Lemmatizer()
+        self.lemmatizer = Lemmatizer_xpos()
 
     def tearDown(self):
         self.lemmatizer = None
@@ -25,7 +25,6 @@ class TestLemmatizer(unittest.TestCase):
             reader = csv.reader(file)
             next(reader)
             for line in reader:
-                print(line)
                 self.assertEqual(self.lemmatizer.lemmatize(line[0], line[1]), line[2])
 
     def from_file_fixed_xpos(self, filename, xpos):
@@ -101,17 +100,8 @@ class TestLemmatizer(unittest.TestCase):
         self.second_comparative("fheàirrde", "math")
         self.second_comparative("mhisde", "dona")
 
-    def test_interjections(self):
-        """TODO: move to csv"""
-        self.assertEqual(self.lemmatizer.lemmatize("bhuel", "I"), "bhuel")
-        self.assertEqual(self.lemmatizer.lemmatize("shìorraidh", "I"), "sìorraidh")
-        self.assertEqual(self.lemmatizer.lemmatize("uh", "I"), "uh")
-
-    def test_nouns(self):
-        """Verbal nouns are in a separate test."""
-        print(Path(__file__))
-
-        self.from_file('resources/test_nouns.csv')
+    def test_conjunctions(self):
+        self.assertEqual(self.lemmatizer.lemmatize("’s", "Cc"), "is")
 
     def test_copula(self):
         """TODO: move to csv"""
@@ -128,6 +118,16 @@ class TestLemmatizer(unittest.TestCase):
         self.assertEqual(self.lemmatizer.lemmatize("nach", "Wpdqn"), "is")
         self.assertEqual(self.lemmatizer.lemmatize("'se", "Wp-i-3"), "is")
         self.assertEqual(self.lemmatizer.lemmatize("as", "Wpr"), "is")
+
+    def test_interjections(self):
+        """TODO: move to csv"""
+        self.assertEqual(self.lemmatizer.lemmatize("bhuel", "I"), "bhuel")
+        self.assertEqual(self.lemmatizer.lemmatize("shìorraidh", "I"), "sìorraidh")
+        self.assertEqual(self.lemmatizer.lemmatize("uh", "I"), "uh")
+
+    def test_nouns(self):
+        """Verbal nouns are in a separate test."""
+        self.from_file('resources/test_nouns.csv')
 
     def test_particles(self):
         """TODO: move to csv"""
@@ -145,22 +145,6 @@ class TestLemmatizer(unittest.TestCase):
     def test_prepositions(self):
         """Examples in the file may also be Nf."""
         self.from_file('resources/test_nouns.csv')
-
-    def test_copula(self):
-        """TODO: move to csv"""
-        self.assertEqual(self.lemmatizer.lemmatize("an", "Wpdqa"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("B'", "Ws"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("b'", "Ws"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("bu", "Ws"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("cha", "Wp-in"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("chan", "Wp-in"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("gur", "Wpdia"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("'S", "Wp-i"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("'s", "Wp-i"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("is", "Wp-i"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("nach", "Wpdqn"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("'se", "Wp-i-3"), "is")
-        self.assertEqual(self.lemmatizer.lemmatize("as", "Wpr"), "is")
 
     def test_particles(self):
         """TODO: move to csv"""

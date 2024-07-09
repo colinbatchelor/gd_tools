@@ -1,9 +1,8 @@
 """Tests a mixture of generic, UD-specific and CCG-specific functions."""
 import csv
 import unittest
-from gd_tools.acainn import CCGRetagger, CCGTyper, Subcat
-from gd_tools.features import Features
-from gd_tools.lemmatizer import Lemmatizer
+from gd_tools.ccg import CCGRetagger, CCGTyper, Subcat
+from gd_tools.core import Lemmatizer_xpos
 
 class TestIntegration(unittest.TestCase):
     """Checks that all the labels actually match."""
@@ -28,43 +27,6 @@ class TestIntegration(unittest.TestCase):
         for key in self.subcat.mappings:
             for item in self.subcat.mappings[key]:
                 self.assertTrue(item in self.typer.types.keys(), item)
-
-class TestFeatures(unittest.TestCase):
-    """Tests features generated correctly in UD format."""
-    def setUp(self):
-        self.featuriser = Features()
-
-    def tearDown(self):
-        self.featuriser = None
-
-    def test_feats_adj(self):
-        """Checks for predicate (will break) and comparatives/superlatives."""
-        self.assertEqual({}, self.featuriser.feats_adj('Ap'))
-        self.assertEqual({'Degree':['Cmp,Sup']}, self.featuriser.feats_adj('Apc'))
-
-    def test_feats_det(self):
-        """Tests feature sets for determiners"""
-        self.assertEqual({"Definite": ["Def"], 'Gender':['Masc'],'Number':['Sing'],
-                          "PronType":["Art"]},
-                         self.featuriser.feats_det('Tdsm'))
-        self.assertEqual({"Definite": ["Def"], 'Gender':['Fem'],'Number':['Sing'],
-                          "PronType":["Art"]},
-                         self.featuriser.feats_det('Tdsf'))
-        self.assertEqual({"Definite": ["Def"], 'Gender':['Masc'],'Number':['Plur'],
-                          "PronType":["Art"]},
-                         self.featuriser.feats_det('Tdpm'))
-        self.assertEqual({"Definite": ["Def"], 'Case':['Gen'],'Gender':['Fem'], 'Number':['Plur'],
-                          "PronType":["Art"]},
-                         self.featuriser.feats_det('Tdpfg'))
-
-    def test_feats_noun(self):
-        """Tests feature sets for nouns."""
-        self.assertEqual({'Case':['Nom'],'Gender':['Masc'],'Number':['Sing']},
-                         self.featuriser.feats_noun('Ncsmn', {}))
-        self.assertEqual({'Case':['Dat'],'Gender':['Fem'],'Number':['Plur']},
-                         self.featuriser.feats_noun('Ncpfd', {}))
-        self.assertEqual({'Case':['Gen'],'Gender':['Fem'],'Number':['Plur']},
-                         self.featuriser.feats_noun('Ncpfg', {}))
 
 class TestCCGTyper(unittest.TestCase):
     """Assigns CCG expressions based on form, xpos and subcat."""

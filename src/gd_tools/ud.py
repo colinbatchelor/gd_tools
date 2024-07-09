@@ -1,7 +1,10 @@
-"""Assigns Scottish Gaelic UD features based on ARCOSG POS tags."""
+import os
+import csv
+import re
 
 class Features:
     """
+    Assigns Scottish Gaelic UD features based on ARCOSG POS tags.
     These methods generate a dictionary as per the UD guidelines.
     """
     def __init__(self):
@@ -204,3 +207,4 @@ class Features:
         if xpos[1] == "m":
             result["Mood"] = ["Imp"]
         return result
+

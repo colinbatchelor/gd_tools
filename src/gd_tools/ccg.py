@@ -3,44 +3,9 @@ import os
 from pathlib import Path
 import re
 import csv
-from gd_tools.lemmatizer import Lemmatizer
-
-class Morphology:
-    """Static methods for grammar checker."""
-    @staticmethod
-    def can_follow_de(surface: str) -> bool:
-        """this is dè the interrogative"""
-        return surface in ["cho", "am", "an", "a'", "na", "mar", "bha", "tha"]
-
-    @staticmethod
-    def lenited(surface: str) -> bool:
-        """
-Generic test for whether the orthographic form of a word has been lenited.
-
-Words beginning with n, l and r also lenite but this is orthographically silent.
-"""
-        unlenitable = re.match(r"[AEIOUaeiouLlNnRr]|[Ss][gpt]", surface)
-        return bool(unlenitable) | (surface[1] == 'h')
-
-    @staticmethod
-    def lenited_pd(surface: str) -> bool:
-        """
-TODO: Work out why this is separate from the previous function and delete if unnecessary.
-"""
-        unlenitable = surface.match(r"[AEIOUaeiouLlNnRr]|[Ss][gpt]")
-        return unlenitable | (surface[1] == 'h')
-
-    @staticmethod
-    def chalenited_pd(surface: str) -> bool:
-        """There are different rules for lenition after cha."""
-        unlenitable = surface.match(r"[AEIOUaeiouLlNnRrDTSdts]")
-        return unlenitable | (surface[1] == 'h')
-
-    @staticmethod
-    def ndlenited_pd(surface: str) -> bool:
-        """TODO: rename to non_dental_lenited."""
-        unlenitable = surface.match(r"[AEIOUaeiouDdTtNnRrSs]")
-        return unlenitable | (surface[1] == 'h')
+from gd_tools.core import Lemmatizer
+from gd_tools.core import Lemmatizer_xpos
+from gd_tools.core import Morphology
 
 class CCGRetagger:
     """Relies on the subcategoriser, largely."""
@@ -99,7 +64,7 @@ class CCGRetagger:
 class Subcat:
     """Assigns subcategories based on lemmata."""
     def __init__(self):
-        self.lemmatizer = Lemmatizer()
+        self.lemmatizer = Lemmatizer_xpos()
         self.mappings = {}
         self.mappings['default'] = ['TRANS', 'INTRANS']
         subcats = []

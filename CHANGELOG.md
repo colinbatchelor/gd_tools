@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.2 (09/07/2024)
+
+- Initial work on pre-GOC text.
+
 ## v0.1.1 (07/02/2024)
 
 - Realised there is a gdtools already on pypi and renamed to gd_tools.
