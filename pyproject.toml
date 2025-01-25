@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gd_tools"
-version = "0.1.2"
+version = "0.1.3"
 description = "Natural language processing tools for Scottish Gaelic"
 authors = ["Colin Batchelor"]
 license = "MIT"

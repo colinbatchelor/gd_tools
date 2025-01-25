@@ -1,7 +1,12 @@
 form,lemma
+# determiners
+chuile,uile
+# parts of interjections
+'n,an
 # comparatives
 àille,àlainn
 aotruime,aotrom
+big,beag
 bige,beag
 duirche,dorcha
 fhasa,furasta
@@ -20,7 +25,7 @@ leatha,leathann
 mheasaile,measail
 mhò,mòr
 mhuth',mòr
-motha,math
+mhotha,mòr
 miona,mion
 miosa,dona
 mhisde,dona
@@ -63,6 +68,7 @@ robhar,bi
 robhas,bi
 thathar,bi
 thathas,bi
+ceanglaidh,ceangail
 cluinntinn,cluinn
 chluinntinn,cluinn
 cuala,cluinn
@@ -73,22 +79,28 @@ ars',arsa
 ar,arsa
 ars,arsa
 as,arsa
+dubhairt,abair
+thubhairt,abair
 ràdh,abair
 their,abair
+theireadh,abair
 theirear,abair
 thuirt,abair
 chaidh,rach
+cruibhleadh,cruibhil
+cuibhleadh,cuibhil
 dol,rach
 dhol,rach
 thèid,rach
 théid,rach
 tèid,rach
+teid,rach
 deach,rach
 deachaidh,rach
+d'readh,rach
 rinn,dèan
 dèanamh,dèan
 dhèanamh,dèan
-nì,dèan
 chunnaic,faic
 chunna,faic
 faicinn,faic
@@ -101,6 +113,7 @@ faca,faic
 faighinn,faigh
 fhaighinn,faigh
 fhuair,faigh
+fhuaras,faigh
 gheibh,faigh
 gheibhear,faigh
 breith,beir
@@ -110,6 +123,7 @@ beiridh,beir
 ràinig,ruig
 ruigsinn,ruig
 ruigidh,ruig
+tadhlaidh,tadhail
 thadhladh,tadhail
 tighinn,thig
 thighinn,thig
@@ -120,6 +134,9 @@ tàinig,thig
 dàinig,thig
 tànaig,thig
 thogras,togair
+thogradh,togair
+togradh,togair
+tograidh,togair
 toirt,toir
 thoirt,toir
 thug,toir
@@ -154,11 +171,15 @@ bailtean,baile
 bàird,bàrd
 ballaichean,balla
 bàtaichean,bàta
+beinne,beinn
 beanntan,beinn
 beathaichean,beathach
 bilean,bile
 bliadhnaichean,bliadhna
 bobhtaichean,bobhta
+bomaichean,boma
+bradan,bradan
+bràithrean,bràthair
 buidhne,buidheann
 buidheannan,buidheann
 buill,ball
@@ -250,13 +271,18 @@ dighe,dioch
 dùthcha,dùthaich
 èisg,iasg
 feòir,feur
+Frainge,Fraing
+Gearmailte,Gearmailt
+Gobhainn,Gobha
 guailne,gualann
 làimhe,làmh
 laoigh,laogh
 luinge,long
 maidne,madainn
+'ic,mac
 mic,mac
 Mic,Mac
+Màim,màm
 muice,muc
 neòil,neul
 obrach,obair

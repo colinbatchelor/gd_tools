@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.3 (23/01/2025)
+
+- Fixed the lemmatizer bugs detailed in https://github.com/colinbatchelor/gd_tools/issues/1	
+
 ## v0.1.2 (09/07/2024)
 
 - Initial work on pre-GOC text.
