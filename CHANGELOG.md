@@ -1,8 +1,16 @@
 # Changelog
 
+## v0.1.5 (05/05/2025)
+
+- Fixed further lemmatizer bugs as detailed in https://github.com/colinbatchelor/gd_tools/issues/1
+
+## v0.1.4 (26/01/2025)
+
+- Lemmatises _'s_ properly.
+
 ## v0.1.3 (23/01/2025)
 
-- Fixed the lemmatizer bugs detailed in https://github.com/colinbatchelor/gd_tools/issues/1	
+- Fixed the lemmatizer bugs detailed in https://github.com/colinbatchelor/gd_tools/issues/1
 
 ## v0.1.2 (09/07/2024)
 

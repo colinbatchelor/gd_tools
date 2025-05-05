@@ -111,6 +111,7 @@ class TestLemmatizer(unittest.TestCase):
         self.comparative("mhuth'", "mòr")
         self.comparative("miona", "mion")
         self.comparative("miosa", "dona")
+        self.comparative("mù", "mòr")
         self.comparative("òige", "òg")
         self.comparative("nitheile", "nitheil")
         self.comparative("righne", "righinn")
@@ -129,6 +130,9 @@ class TestLemmatizer(unittest.TestCase):
         There is only one conjunction which needs to be lemmatized that I am aware of.
         """
         self.assertEqual(self.lemmatizer.lemmatize("’s", "Cc"), "is")
+        self.assertEqual(self.lemmatizer.lemmatize("'s", "Cc"), "is")
+        self.assertEqual(self.lemmatizer.lemmatize("’s", "Cs"), "is")
+        self.assertEqual(self.lemmatizer.lemmatize("'s", "Cs"), "is")
 
     def test_copula(self):
         """TODO: move to csv"""

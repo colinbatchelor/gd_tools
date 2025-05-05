@@ -25,6 +25,7 @@ leatha,leathann
 mheasaile,measail
 mhò,mòr
 mhuth',mòr
+mù,mòr
 mhotha,mòr
 miona,mion
 miosa,dona
@@ -116,6 +117,7 @@ fhuair,faigh
 fhuaras,faigh
 gheibh,faigh
 gheibhear,faigh
+gheibheadh,faigh
 breith,beir
 bhreith,beir
 rug,beir
@@ -143,11 +145,13 @@ thug,toir
 bheir,toir
 bheirear,toir
 tug,toir
+Albainn,Alba
+Albann,Alba
 # demonyms
 Albannaich,Albannach
 Basgaich,Basgach
+Beàrnarach,Beàrnarach
 Beàrnaraich,Beàrnarach
-Beàrnaraich,Beàrnaraich
 Breatannaich,Breatannach
 Caimbeulaich,Caimbeulach
 Deamaich,Deamach
@@ -158,8 +162,10 @@ Innseanach,Innseanach
 Innseanaich,Innseanach
 Nàiseantaich,Nàiseantach
 Sasannaich,Sasannach
+Sgalpach,Sgalpach
 Sheathanaich,Seathanach
 Sìnich,Sìneach
+Stiùbhartach,Stiùbhartach
 Tearaich,Tearach
 Uibhistich,Uibhisteach
 # specials
@@ -198,8 +204,8 @@ creachan,creach
 daoine,duine
 drugaichean,druga
 eachdraichean,eachdraiche
-ealain,ealan
-ealan,ealan
+ealain,ealain
+ealan,ealain
 eathraichean,eathar
 eich,each
 eileanan,eilean
@@ -241,6 +247,7 @@ teantaichean,teanta
 tobhtaichean,tobhta
 tobraichean,tobar
 trèanaichean,trèana
+tuill,toll
 uan,uan
 # obliques
 ille,gille

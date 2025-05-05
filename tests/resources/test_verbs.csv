@@ -60,6 +60,7 @@ chunnaic,V-s,faic
 faicinn,Nv,faic
 fhaicinn,Nv,faic
 faigheadh,V-h--d,faigh
+gheibheadh,V-h,faigh
 faighinn,Nv,faigh
 fhuair,V-s,faigh
 fhuaras,V-s0,faigh
@@ -88,3 +89,6 @@ thoirt,Nv,toir
 toirt,Nv,toir
 cruibhleadh,Nv,cruibhil
 cuibhleadh,Nv,cuibhil
+bhiomaid,V-h1p,bi
+biomaid,V-h1pd,bi
+gheibheadh,V-h,faigh

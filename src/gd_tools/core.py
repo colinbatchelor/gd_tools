@@ -69,7 +69,9 @@ class Morphology:
         """Removes h as the second letter except for special cases."""
         if len(surface) < 3:
             return surface
-        if surface in ["Shaw", "Christie"]:
+        if surface in ["Charles", "Chapman", "Shaw", "Christie", "three", "thirty", "thruppence",
+                       "sheet", "sheets", "the", "The", "thanks", "Bhatarsaigh", "shoal", "charge",
+                       "Chinook", "think", "chance", "thousand", "phone", "theatre", "Choice"]:
             return surface
         return surface[0] + surface[2:] if surface[1] == 'h' else surface
 
@@ -171,8 +173,12 @@ class Lemmatizer:
         """
         Lemmatizes the conjunction in 'surface'
         """
-        if surface == "'s":
+        if surface == "a's":
+            return "agus"
+        if re.match("'i?s", surface):
             return "is"
+        if surface == "'n":
+            return "an"
         return surface
 
     def lemmatize_preposition(self, surface: str) -> str:
@@ -188,12 +194,16 @@ class Lemmatizer:
         for pattern in self.prepositions:
             if re.match("^("+pattern+")$", surface):
                 return self.prepositions[pattern]
+        if re.match("bh?eulaibh", surface):
+            return "beul"
         return "bho" if surface.startswith("bh") else Morphology.delenite(surface)
 
     def lemmatize_pronoun(self, surface: str) -> str:
         """
         Consider rewriting based on POS tag.
         """
+        if surface == "sib'":
+            return "sibh"
         if surface.endswith("'"):
             surface = Morphology.remove_final_apostrophe(surface)
         if surface in self.pronouns:
@@ -269,18 +279,34 @@ class Lemmatizer_xpos:
             "thchannan": "thaich",
             "annan": "a", "thran": "thar",
             "oill": "all", "uill": "all", "ait": "at",
-            "ach": "a",             # might just be caorach
+            "caorach": "caora",
             "rìghrean": "rìgh",
-            "ean": "", "an": ""
+            "nntean": "nn",
+            "ean": "",
+            "rsan": "ras",
+            "an": ""
             }
 
         if xpos.startswith("Ncp"):
             surface = re.sub("aibh$", "", surface)
+            if surface == "companaidhean":
+                return "companaidh"
+            '''
+            This next one can be worked up with more special cases
+            '''
+            if surface == "eilean":
+                return surface
             surface = Core.replace_ending(plural_replacements, surface)
-        f_replacements = {'eig': 'eag', 'eige': 'eag', 'the': 'th', "rce": "rc"}
+        f_replacements = {'eig': 'eag', 'eige': 'eag',
+                          "ire": "ir",
+                          'the': 'th', "rce": "rc"}
         if oblique and 'f' in xpos:
             surface = Core.replace_ending(f_replacements, surface)
-        m_replacements = {'aich': 'ach', 'aidh': 'adh', 'ais': 'as', 'uis': 'us', "aimh": "amh"}
+        m_replacements = {
+            'aich': 'ach',
+            'aidh': 'adh',
+            "ail": "al",
+            'ais': 'as', 'uis': 'us', "aimh": "amh"}
         if oblique and 'm' in xpos:
             surface = Core.replace_ending(m_replacements, surface)
         if re.match(".*[bcdfghlmnprst]ich$", surface):
@@ -291,28 +317,48 @@ class Lemmatizer_xpos:
         """
         Normalises surface using part-of-speech information in xpos.
 
-        Master function which uses other functions for Nc, Nn, Nt and Nv.
+        Parent function which uses other functions for Nc, Nn, Nt and Nv.
         Nf ("fossilised noun") is _usually_ more like a preposition so is dealt with elsewhere.
         """
         oblique = re.match('.*[vdg]e?\\*?$', xpos)
         if surface.startswith("'"):
             surface = surface[1:]
-        if surface not in ["Bhatarsaigh", "Chinook"]:
-            surface = Morphology.delenite(surface)
+        if surface == "O'":
+            return surface
+        surface = Morphology.delenite(surface)
         surface = Morphology.remove_final_apostrophe(surface)
         if xpos.startswith("Nn"):
             return self.lemmatize_proper_noun(surface, oblique)
-        if xpos.endswith("e") or xpos.endswith("e*"):
-            surface = re.sub("-?san?$", "", surface)
-
+        if xpos == "Nt":
+            if surface in self.lemmata:
+                return self.lemmata[surface]
+            else:
+                return surface
         if surface in self.lemmata:
             return self.lemmata[surface]
-
+        surface = surface.lower()
+        if xpos.endswith("e") or xpos.endswith("e*"):
+            surface = re.sub("-?san?$", "", surface)
+            print(surface)
+        if surface in self.lemmata:
+            return self.lemmata[surface]            
         if xpos == "Nv":
             return self.lemmatize_vn(surface)
-        if xpos == "Nt":
-            return "Alba" if surface in ["Albann", "Albainn"] else surface
         return self.lemmatize_common_noun(surface, xpos, oblique)
+
+    def lemmatize_number(self, surface: str) -> str:
+        """
+        Delenites number words. Only needs the surface.
+        """
+        return Morphology.delenite(surface)
+
+    def lemmatize_particle(self, surface: str) -> str:
+        """
+        Removes final nasals added for euphony.
+        """
+        if surface in ["b'", "bu"]:
+            return "is"
+        return re.sub("[mn]$", "", surface)
 
     def lemmatize_possessive(self, xpos: str) -> str:
         """
@@ -356,7 +402,9 @@ class Lemmatizer_xpos:
         replacements = [
             ("Vm-1p", "e?amaid$"), ("Vm-2p", "a?ibh$"),
             ("V-s0", "e?adh$"), ("V-p0", "e?a[rs]$"), ("V-f0", "e?ar$"),
-            ("V-h", "e?adh$"), ("Vm-3", "e?adh$"), ("V-f", "a?(idh|s)$")
+            ("V-h1p", "omaid$"),
+            ("V-h", "e?adh$"),
+            ("Vm-3", "e?adh$"), ("V-f", "a?(idh|s)$")
         ]
         surface = Morphology.delenite(surface)
         relative_replacements = { "eas": "", "as": "" }
@@ -391,7 +439,7 @@ class Lemmatizer_xpos:
         """
         surface = surface.replace('\xe2\x80\x99', "'").replace('\xe2\x80\x98', "'")
         surface = re.sub("[’‘]", "'", surface)
-        surface = re.sub("^(h-|t-|n-|[Dd]h')", "", surface)
+        surface = re.sub("^([Hh]-|t-|n-|[Dd]h')", "", surface)
         specials = [("Q--s", "do"), ("W", "is"), ("Csw", "is"), ("Td", "an")]
         if xpos is None:
             surface = surface.lower()
@@ -402,9 +450,9 @@ class Lemmatizer_xpos:
         for special in specials:
             if xpos.startswith(special[0]):
                 return special[1]
-        if xpos[0:2] not in ["Nn", "Nt", "Up", "Y"]:
+        if xpos[0:2] not in ["Nc", "Nn", "Nt", "Up", "Y"]:
             surface = surface.lower()
-        if xpos == "Cc":
+        if xpos in ["Cc", "Cs"]:
             return self.lemmatizer.lemmatize_conjunction(surface)
         if xpos.startswith("R") or xpos == "I":
             if surface in self.lemmata:
@@ -414,6 +462,10 @@ class Lemmatizer_xpos:
                 return Morphology.delenite(surface)
         if xpos[0:2] in ["Ap", "Aq", "Ar", "Av"]:
             return self.lemmatize_adjective(surface, xpos)
+        if xpos[0:2] in ["Mc", "Mo"]:
+            return self.lemmatize_number(surface)
+        if xpos[0:2] in ["Qa", "Qn"]:
+            return self.lemmatize_particle(surface)
         if xpos[0:2] in ["Sa", "Sp", "Pr", "Nf"]:
             return self.lemmatizer.lemmatize_preposition(surface)
         if xpos.startswith("Pp") or xpos == "Px":
@@ -422,6 +474,11 @@ class Lemmatizer_xpos:
             return self.lemmatize_verb(surface, xpos)
         if xpos.startswith("N"):
             return self.lemmatize_noun(surface, xpos)
+        if xpos.startswith("Dd"):
+            if surface == "'sa":
+                return "sa"
+            else:
+                return surface
         if xpos.startswith("Dp"):
             return self.lemmatize_possessive(xpos)
         if xpos in ["Dq", "Up"] and surface in self.lemmata:
