@@ -1,15 +1,15 @@
 regex,lemma
-a',ag
 g,ag
 aga(m|d|inn|ibh)e?|aige|aice|aca|a'[dm],aig
 or[mt]|oir(re|bh|nn)|orra,air
-son,airson
-s?a[mn],an
-sa?,an
+'?son,airson
+'?s?a[mn],an
+'?sa?,an
 'm,an
 'nar,an
-n,an
-na[dmn]?,an
+'n,an
+a',an
+'?na[dmn]?,an
 [au]nn(am|ta),an
 innte,an
 a?'s,an
@@ -39,3 +39,4 @@ re.*,ro
 ro.*,ro
 tha.*,thar
 tron,tro
+tro',troimh

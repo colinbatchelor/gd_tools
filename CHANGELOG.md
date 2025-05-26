@@ -1,8 +1,13 @@
 # Changelog
 
+## v0.1.6 (26/05/2025)
+
+- Code to replace final apostrophe with a or e no longer does so after a vowel. (https://github.com/colinbatchelor/gd_tools/issues/5)
+- Lemmatiser now lemmatises more pronouns. (https://github.com/colinbatchelor/gd_tools/issues/4)
+
 ## v0.1.5 (05/05/2025)
 
-- Fixed further lemmatizer bugs as detailed in https://github.com/colinbatchelor/gd_tools/issues/1
+- Fixed further lemmatizer bugs as detailed in https://github.com/colinbatchelor/gd_tools/issues/3
 
 ## v0.1.4 (26/01/2025)
 

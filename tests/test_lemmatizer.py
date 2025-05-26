@@ -34,6 +34,7 @@ class TestLemmatizer(unittest.TestCase):
             reader = csv.reader(file)
             next(reader)
             for line in reader:
+                print(line)
                 self.assertEqual(self.lemmatizer.lemmatize(line[0], line[1]), line[2])
 
     def from_file_fixed_xpos(self, filename, xpos):
@@ -215,11 +216,22 @@ class TestLemmatizer(unittest.TestCase):
         Note that the lemmatizer preserves acutes.
         Converting them to grave accents is the job of another part of the pipeline.
         """
+        self.assertEqual(self.lemmatizer.lemmatize("'d", "Pp3p"), "iad")
+        self.assertEqual(self.lemmatizer.lemmatize("àsan", "Pp3p--e"), "iad")
+        self.assertEqual(self.lemmatizer.lemmatize("sibh-se", "Pp2p--e"), "sibh")
         self.assertEqual(self.lemmatizer.lemmatize("chéile", "Px"), "céile")
         self.assertEqual(self.lemmatizer.lemmatize("chèile", "Px"), "cèile")
         self.assertEqual(self.lemmatizer.lemmatize("fhéin", "Px"), "féin")
+        self.assertEqual(self.lemmatizer.lemmatize("péin", "Px"), "féin")
         self.assertEqual(self.lemmatizer.lemmatize("fhèin", "Px"), "fèin")
         self.assertEqual(self.lemmatizer.lemmatize("fhìn", "Px"), "fèin")
+        self.assertEqual(self.lemmatizer.lemmatize("shin", "Pd"), "sin")
+        self.assertEqual(self.lemmatizer.lemmatize("shean", "Pd"), "sean")
+        self.assertEqual(self.lemmatizer.lemmatize("càit", "Uq"), "càite")
+        self.assertEqual(self.lemmatizer.lemmatize("càit'", "Uq"), "càite")
+        self.assertEqual(self.lemmatizer.lemmatize("càite", "Uq"), "càite")
+        self.assertEqual(self.lemmatizer.lemmatize("cuin'", "Uq"), "cuine")
+        self.assertEqual(self.lemmatizer.lemmatize("cuin", "Uq"), "cuine")
 
     def test_verbal_nouns(self):
         """

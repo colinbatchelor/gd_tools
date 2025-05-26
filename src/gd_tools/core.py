@@ -120,7 +120,7 @@ class Morphology:
         """
         Makes a guess based on slenderness of last vowel.
         """
-        if surface.endswith("'") and surface != "a'":
+        if re.match(".*[bcdfghlmnprst]'$", surface):
             result = re.sub("'$", "", surface)
             stem = re.sub("[bcdfghlmnprst]+'$", "", surface)
             if re.match(".*[aouàòù]$", stem):
@@ -142,9 +142,10 @@ class Lemmatizer:
                 self.lemmata[row[0]] = row[1]
         pronouns = {
             "mi": ["mise"], "thu": ["tu", "tusa", "thusa"],
-            "e": ["esan"], "i": ["ise"],
-            "sinn": ["sinne"], "sibh": ["sibhse"], "iad": ["iadsan"],
-            "fèin": ["fhìn"]
+            "e": ["esan", "è"], "i": ["ise"],
+            "sinn": ["sinne"], "sibh": ["sibhse", "sibh-se"], "iad": ["iadsan", "'d", "àsan"],
+            "fèin": ["fhìn"], "féin": ["péin"],
+            "càite": ["càit", "càit'"], "cuine": ["cuin", "cuin'"]
         }
         self.pronouns = {}
         for key in pronouns:
@@ -154,6 +155,7 @@ class Lemmatizer:
         prep_path = os.path.join(folder, 'resources', 'prepositions.csv')
         with open(prep_path) as file:
             reader = csv.reader(file)
+            next(reader)
             for row in reader:
                 self.prepositions[row[0]] = row[1]
 
@@ -185,8 +187,6 @@ class Lemmatizer:
         """
         Lemmatizes the preposition in 'surface'
         """
-        if surface.startswith("'") and len(surface) > 1:
-            surface = surface[1:]
         surface = Morphology.remove_final_apostrophe(surface.replace(' ', '_'))
         surface = re.sub('^h-', '', surface)
         if not re.match("^'?s[ae]n?$", surface):
@@ -208,7 +208,7 @@ class Lemmatizer:
             surface = Morphology.remove_final_apostrophe(surface)
         if surface in self.pronouns:
             return self.pronouns[surface]
-        if surface.startswith("fh") or surface.startswith("ch"):
+        if surface.startswith("fh") or surface.startswith("ch") or surface.startswith("sh"):
             return Morphology.delenite(surface)
         return surface
 
@@ -339,7 +339,6 @@ class Lemmatizer_xpos:
         surface = surface.lower()
         if xpos.endswith("e") or xpos.endswith("e*"):
             surface = re.sub("-?san?$", "", surface)
-            print(surface)
         if surface in self.lemmata:
             return self.lemmata[surface]            
         if xpos == "Nv":
@@ -413,7 +412,11 @@ class Lemmatizer_xpos:
         else:
             for replacement in replacements:
                 if xpos.startswith(replacement[0]):
-                    return re.sub(replacement[1], "", surface)
+                    result = re.sub(replacement[1], "", surface)
+                    if result.endswith("br"):
+                        return result[:-2] + "bair"
+                    else:
+                        return result
         return surface
 
     def lemmatize_vn(self, surface: str) -> str:
@@ -466,9 +469,11 @@ class Lemmatizer_xpos:
             return self.lemmatize_number(surface)
         if xpos[0:2] in ["Qa", "Qn"]:
             return self.lemmatize_particle(surface)
-        if xpos[0:2] in ["Sa", "Sp", "Pr", "Nf"]:
+        if xpos[0:2] in ["Sp", "Pr", "Nf"]:
             return self.lemmatizer.lemmatize_preposition(surface)
-        if xpos.startswith("Pp") or xpos == "Px":
+        if xpos[0:2] == "Sa":
+            return "ag" if surface in ["a'", "'g", "'ga"] else "ri" if surface == "r'" else surface
+        if xpos.startswith("Pp") or xpos in ["Pd", "Px", "Uq"]:
             return self.lemmatizer.lemmatize_pronoun(surface)
         if xpos.startswith("V"):
             return self.lemmatize_verb(surface, xpos)
